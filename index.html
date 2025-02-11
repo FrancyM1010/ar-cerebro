@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>AR Cerebro sin Marcador</title>
+  
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  
+  <!-- Niantic Lightship AR -->
+  <script src="https://websdk.lightship.dev/aframe/v1.3.0/lightship-aframe.min.js"></script>
+
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- Escena AR con Plane Tracking -->
+  <a-scene
+    lightship="apiKey: h3QlcFQiwQGW6WBZ4vfEqBzNJMMCaWK3IGu4vj138zp6GBxasvanqMSWkoLsDoNqJOag2n"
+    renderer="logarithmicDepthBuffer: true;"
+    arjs="sourceType: webcam; debugUIEnabled: false;"
+  >
+
+    <!-- Plane Tracker: Detecta superficies reales -->
+    <a-entity lightship-plane-tracker>
+      <a-entity 
+        gltf-model="url(model_of_a_human_brain.glb)"
+        scale="0.1 0.1 0.1"
+        position="0 0 0"
+        rotation="0 180 0"
+      >
+      </a-entity>
+    </a-entity>
+
+    <!-- Cámara AR -->
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+</body>
+</html>
