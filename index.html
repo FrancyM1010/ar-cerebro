@@ -46,16 +46,16 @@
   <!-- Botón para reiniciar la cámara -->
   <button id="restart-btn" onclick="restartCamera()">🔄 Reiniciar Cámara</button>
 
-  <!-- Vista previa de la cámara para depuración -->
+  <!-- Vista previa de la cámara -->
   <video id="video-preview" autoplay playsinline></video>
 
-  <!-- Script para forzar la cámara -->
+  <!-- Script para verificar detección de cámara -->
   <script>
     function checkCamera() {
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
         .then(function(stream) {
           console.log("✅ Cámara activada correctamente.");
-          document.getElementById("video-preview").srcObject = stream; // Mostrar la cámara
+          document.getElementById("video-preview").srcObject = stream;
         })
         .catch(function(err) {
           console.error("🚨 Error activando la cámara:", err);
@@ -74,22 +74,32 @@
   <a-scene
     vr-mode-ui="enabled: false;"
     embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true; videoTexture: true;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
   >
 
     <!-- Patrón HIRO cargado desde GitHub RAW -->
     <a-marker
       type="pattern"
       url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro"
+      emitevent
     >
+      <!-- Log para detectar si AR.js reconoce el patrón -->
+      <script>
+        document.querySelector('a-marker').addEventListener('markerFound', function() {
+          console.log("🎯 Patrón HIRO detectado correctamente.");
+        });
+        document.querySelector('a-marker').addEventListener('markerLost', function() {
+          console.log("❌ Patrón HIRO perdido.");
+        });
+      </script>
 
-      <!-- Modelo de prueba (si el otro no carga) -->
-      <a-box position="0 0.5 0" material="color: red;"></a-box>
+      <!-- Modelo de prueba más grande para que se note -->
+      <a-box position="0 1 0" material="color: red; opacity: 0.8;"></a-box>
 
     </a-marker>
 
     <!-- Cámara AR -->
-    <a-entity camera position="0 1.6 0"></a-entity>
+    <a-entity camera></a-entity>
 
   </a-scene>
 
