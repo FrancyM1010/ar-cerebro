@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8">
   <title>AR.js con A-Frame - Modelo 3D de Cerebro</title>
+
   <!-- A-Frame (framework para 3D en la web) -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <!-- AR.js versión para A-Frame -->
-  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.3.2/aframe/build/aframe-ar.js"></script>
+
+  <!-- AR.js versión más estable (2.2.1 en vez de 3.3.2) -->
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@2.2.1/aframe/build/aframe-ar.min.js"></script>
+
   <style>
     body, html {
       margin: 0;
@@ -16,18 +19,21 @@
   </style>
 </head>
 <body>
+
   <!-- Escena de A-Frame con AR.js -->
   <a-scene
     vr-mode-ui="enabled: false;"
     embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
   >
-    <!-- Marcador (en este caso HIRO) -->
+
+    <!-- Marcador HIRO -->
     <a-marker
       type="pattern"
-      url="hiro.patt"
+      url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro"
     >
-      <!-- Aquí insertas tu modelo 3D desde Google Drive -->
+
+      <!-- Modelo 3D desde Google Drive (Formato de descarga directa) -->
       <a-entity 
         gltf-model="https://drive.google.com/uc?export=download&id=1y9a82jwkHcBsU1fWRZMBAqHVlFob6pTH"
         position="0 0 0"
@@ -39,6 +45,8 @@
 
     <!-- Cámara AR -->
     <a-entity camera></a-entity>
+
   </a-scene>
+
 </body>
 </html>
