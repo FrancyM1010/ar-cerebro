@@ -10,6 +10,19 @@
   <!-- AR.js (versión estable 2.2.1) -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@2.2.1/aframe/build/aframe-ar.min.js"></script>
 
+  <!-- DRACOLoader para modelos comprimidos -->
+  <script>
+    AFRAME.registerComponent('setup-draco', {
+      init: function () {
+        THREE.DRACOLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+        let dracoLoader = new THREE.DRACOLoader();
+        dracoLoader.setDecoderConfig({ type: 'js' });
+        dracoLoader.preload();
+        this.el.setAttribute('gltf-model', this.el.getAttribute('gltf-model'));
+      }
+    });
+  </script>
+
   <style>
     body, html {
       margin: 0;
@@ -46,18 +59,19 @@
       url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro"
     >
 
-      <!-- Modelo 3D cargado desde GitHub Pages -->
+      <!-- Modelo 3D con DRACOLoader activado -->
       <a-entity 
         gltf-model="https://francym1010.github.io/model/model_of_a_human_brain.glb"
         position="0 0 0"
         scale="0.1 0.1 0.1"
-        rotation="0 180 0">
+        rotation="0 180 0"
+        setup-draco>
       </a-entity>
 
     </a-marker>
 
-    <!-- Cámara AR -->
-    <a-entity camera></a-entity>
+    <!-- Cámara AR con controles -->
+    <a-entity camera look-controls position="0 1.6 0"></a-entity>
 
   </a-scene>
 
