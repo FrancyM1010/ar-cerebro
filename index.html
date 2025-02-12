@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>AR.js - Prueba de Acceso a la Cámara</title>
+  <title>AR.js - Optimizado</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
 
-  <!-- AR.js (versión estable 2.2.1) -->
+  <!-- AR.js (Versión estable 2.2.1) -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@2.2.1/aframe/build/aframe-ar.min.js"></script>
 
   <style>
@@ -30,20 +30,33 @@
       cursor: pointer;
       z-index: 1000;
     }
+    #video-preview {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 240px;
+      background: gray;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Botón para solicitar acceso a la cámara -->
+  <!-- Botón para activar la cámara -->
   <button id="start-btn" onclick="startAR()">🎥 Activar Cámara</button>
+
+  <!-- Vista previa de la cámara -->
+  <video id="video-preview" autoplay playsinline></video>
 
   <script>
     function startAR() {
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
         .then(function(stream) {
           console.log("✅ Cámara activada correctamente.");
-          document.getElementById("start-btn").style.display = "none"; // Oculta el botón
-          document.getElementById("ar-scene").style.display = "block"; // Muestra la escena AR
+          document.getElementById("start-btn").style.display = "none"; // Ocultar botón
+          document.getElementById("video-preview").srcObject = stream; // Mostrar la cámara
+          document.getElementById("ar-scene").style.display = "block"; // Mostrar escena AR
         })
         .catch(function(err) {
           console.error("🚨 Error activando la cámara:", err);
@@ -61,11 +74,19 @@
     style="display: none;" <!-- Oculta la escena hasta que la cámara esté activa -->
   >
 
-    <!-- Patrón HIRO -->
-    <a-marker type="pattern" url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro">
+    <!-- Patrón personalizado -->
+    <a-marker type="pattern" url="https://francym1010.github.io/ar-cerebro/marcador.patt">
       
-      <!-- Caja de prueba -->
-      <a-box position="0 1 0" material="color: red; opacity: 0.8;"></a-box>
+      <!-- Caja de prueba (para verificar detección) -->
+      <a-box position="0 1 0" scale="0.3 0.3 0.3" material="color: red;"></a-box>
+
+      <!-- Modelo 3D glTF -->
+      <a-entity
+        gltf-model="https://francym1010.github.io/ar-cerebro/modelo-prueba.gltf"
+        position="0 0 0"
+        scale="0.1 0.1 0.1"
+        rotation="0 180 0">
+      </a-entity>
 
     </a-marker>
 
