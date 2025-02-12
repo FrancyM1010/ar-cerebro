@@ -15,10 +15,23 @@
       margin: 0;
       overflow: hidden;
       font-family: sans-serif;
+      background: black;
     }
   </style>
 </head>
 <body>
+
+  <!-- Verifica que la cámara se inicie -->
+  <script>
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        console.log("✅ Cámara activada correctamente.");
+      })
+      .catch(function(err) {
+        console.error("🚨 Error activando la cámara:", err);
+        alert("Error: Permite el acceso a la cámara en tu navegador.");
+      });
+  </script>
 
   <!-- Escena de A-Frame con AR.js -->
   <a-scene
@@ -27,7 +40,7 @@
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
   >
 
-    <!-- Marcador HIRO desde GitHub RAW -->
+    <!-- Patrón HIRO desde GitHub RAW -->
     <a-marker
       type="pattern"
       url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro"
@@ -37,7 +50,7 @@
       <a-entity 
         gltf-model="https://francym1010.github.io/model/model_of_a_human_brain.glb"
         position="0 0 0"
-        scale="0.05 0.05 0.05"
+        scale="0.1 0.1 0.1"
         rotation="0 180 0">
       </a-entity>
 
