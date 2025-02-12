@@ -14,11 +14,11 @@
   <script>
     AFRAME.registerComponent('setup-draco', {
       init: function () {
-        THREE.DRACOLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+        let loader = new THREE.GLTFLoader();
         let dracoLoader = new THREE.DRACOLoader();
-        dracoLoader.setDecoderConfig({ type: 'js' });
-        dracoLoader.preload();
-        this.el.setAttribute('gltf-model', this.el.getAttribute('gltf-model'));
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+        loader.setDRACOLoader(dracoLoader);
+        console.log("✅ DRACOLoader activado correctamente.");
       }
     });
   </script>
