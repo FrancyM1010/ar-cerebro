@@ -7,7 +7,7 @@
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
 
-  <!-- AR.js versión 2.2.1 (más estable) -->
+  <!-- AR.js (versión estable 2.2.1) -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@2.2.1/aframe/build/aframe-ar.min.js"></script>
 
   <style>
@@ -30,19 +30,32 @@
       cursor: pointer;
       z-index: 1000;
     }
+    #video-preview {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 240px;
+      background: gray;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Botón para reiniciar la cámara si está en negro -->
+  <!-- Botón para reiniciar la cámara -->
   <button id="restart-btn" onclick="restartCamera()">🔄 Reiniciar Cámara</button>
 
-  <!-- Verifica que la cámara se inicie correctamente -->
+  <!-- Vista previa de la cámara para depuración -->
+  <video id="video-preview" autoplay playsinline></video>
+
+  <!-- Script para forzar la cámara -->
   <script>
     function checkCamera() {
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
         .then(function(stream) {
           console.log("✅ Cámara activada correctamente.");
+          document.getElementById("video-preview").srcObject = stream; // Mostrar la cámara
         })
         .catch(function(err) {
           console.error("🚨 Error activando la cámara:", err);
@@ -61,27 +74,21 @@
   <a-scene
     vr-mode-ui="enabled: false;"
     embedded
-    arjs="trackingMethod: area; sourceType: webcam; debugUIEnabled: true; videoTexture: true;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true; videoTexture: true;"
   >
 
-    <!-- Patrón HIRO desde tu propio GitHub Pages -->
+    <!-- Patrón HIRO cargado desde GitHub RAW -->
     <a-marker
       type="pattern"
-      url="https://francym1010.github.io/pattern/patt.hiro"
+      url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/patt.hiro"
     >
 
-      <!-- Modelo 3D sin DRACO para prueba -->
-      <a-entity 
-        gltf-model="https://francym1010.github.io/model/model_of_a_human_brain.glb"
-        position="0 0 0"
-        scale="0.1 0.1 0.1"
-        rotation="0 180 0"
-      >
-      </a-entity>
+      <!-- Modelo de prueba (si el otro no carga) -->
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
 
     </a-marker>
 
-    <!-- Cámara AR con controles -->
+    <!-- Cámara AR -->
     <a-entity camera position="0 1.6 0"></a-entity>
 
   </a-scene>
